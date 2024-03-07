@@ -1,4 +1,4 @@
-package com.cold.coldlauncher;
+package com.cold.coldlauncher.infrastructure;
 
 import java.util.ArrayList;
 

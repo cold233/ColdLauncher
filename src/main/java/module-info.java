@@ -8,4 +8,8 @@ module com.cold.coldlauncher {
 
     opens com.cold.coldlauncher to javafx.fxml;
     exports com.cold.coldlauncher;
+    exports com.cold.coldlauncher.ui;
+    opens com.cold.coldlauncher.ui to javafx.fxml;
+    exports com.cold.coldlauncher.infrastructure;
+    opens com.cold.coldlauncher.infrastructure to javafx.fxml;
 }

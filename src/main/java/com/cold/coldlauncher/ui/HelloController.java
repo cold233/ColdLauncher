@@ -1,4 +1,4 @@
-package com.cold.coldlauncher;
+package com.cold.coldlauncher.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

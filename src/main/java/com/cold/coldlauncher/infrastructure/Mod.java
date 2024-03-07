@@ -1,4 +1,4 @@
-package com.cold.coldlauncher;
+package com.cold.coldlauncher.infrastructure;
 
 public class Mod {
     private String name;
