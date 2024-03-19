@@ -41,11 +41,11 @@ public class Player {
         if(!str.contains(Character.toString(c))) return str;
         else {
             String[] tmp = str.split(Character.toString(c));
-            String ret="";
+            StringBuilder ret= new StringBuilder();
             for(int i=0;i<tmp.length;i++){
-                ret+=tmp[i];
+                ret.append(tmp[i]);
             }
-            return ret;
+            return ret.toString();
         }
     }
     public boolean validateName(String name){
