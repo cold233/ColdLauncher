@@ -6,6 +6,8 @@ module com.cold.coldlauncher {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
 
+    requires com.alibaba.fastjson2;
+
     opens com.cold.coldlauncher to javafx.fxml;
     exports com.cold.coldlauncher;
     exports com.cold.coldlauncher.ui;

@@ -20,7 +20,7 @@ public class ModList {
         }
         else return false;
     }
-    public boolean delMod(String name){
+    public boolean deleteMod(String name){
         int i=searchMod(name);
         if(i<0) return false;
         else {

@@ -1,5 +1,7 @@
 package com.cold.coldlauncher.infrastructure;
 
+import java.io.IOException;
+
 public abstract class Game {
     private String version;
     private String displayName;
@@ -7,9 +9,10 @@ public abstract class Game {
     private boolean modded;
     private Icon icon;
 
-    public Game(String versionIn, String displayNameIn) {
+    public Game(String versionIn, String displayNameIn,String pathIn) {
         this.version = versionIn;
         this.displayName = displayNameIn;
+        this.path=pathIn;
         this.icon = new Icon();
         this.modded = false;
     }
@@ -30,7 +33,19 @@ public abstract class Game {
         return version;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public Icon getIcon() {
+        return icon;
+    }
+
     public abstract boolean isModded();
 
-    public abstract boolean launch(Player player);
+    public abstract boolean launch(Player player) throws IOException;
 }
