@@ -1,0 +1,135 @@
+@startuml
+class com.cold.coldlauncher.ui.MainGUI {
++ void start(Stage)
+}
+
+class com.cold.coldlauncher.infrastructure.Player {
+- Icon icon
+- String name
+- String uuid
++ Icon getIcon()
++ void setIcon(Icon)
++ String getName()
++ boolean setName(String)
++ String getUuid()
++ boolean setUuid(String)
++ String removeChar(String,char)
++ boolean validateName(String)
++ boolean validateUUID(String)
+}
+
+
+class com.cold.coldlauncher.infrastructure.TesterPlyer {
++ {static} void main(String[])
+}
+
+class com.cold.coldlauncher.infrastructure.NonModedGame {
++ boolean isModded()
++ boolean launch(Player)
+}
+
+class com.cold.coldlauncher.infrastructure.Mod {
+- String name
+- String version
++ String getName()
++ String getVersion()
++ void setVersion(String)
+}
+
+
+abstract class com.cold.coldlauncher.infrastructure.Game {
+- String version
+- String displayName
+- String path
+- boolean modded
+- Icon icon
++ void setDisplayName(String)
++ void setPath(String)
++ void setIcon(Icon)
++ String getVersion()
++ String getDisplayName()
++ String getPath()
++ Icon getIcon()
++ {abstract}boolean isModded()
++ {abstract}boolean launch(Player)
+}
+
+
+class com.cold.coldlauncher.infrastructure.FabricGame {
+- String fabricVersion
+- ModList mods
++ boolean isModded()
++ boolean launch(Player)
++ HashMap<File,String[]> getModInfo(ArrayList<File>)
+}
+
+
+class com.cold.coldlauncher.Main {
++ {static} void main(String[])
+}
+
+class com.cold.coldlauncher.infrastructure.PlayerList {
+- ArrayList<Player> playerList
++ ArrayList<Player> getPlayerList()
++ int searchPlayerByName(String)
++ int searchPlayerByUUID(String)
++ boolean addPlayer(String,String)
++ boolean deletePlayerByName(String)
++ boolean deletePlayerByUUID(String)
+}
+
+
+class com.cold.coldlauncher.infrastructure.ModList {
+- ArrayList<Mod> modList
++ int searchMod(String)
++ boolean addMod(Mod)
++ boolean deleteMod(String)
+}
+
+
+class com.cold.coldlauncher.infrastructure.TesterModUtil {
++ {static} void main(String[])
+}
+
+class com.cold.coldlauncher.infrastructure.TesterFabricGame {
++ {static} void main(String[])
+}
+
+interface com.cold.coldlauncher.infrastructure.ModUtil {
+~ {static} ArrayList<File> getJarList(String)
+~ {static} String getZipTextFileContent(String,String)
+~ {static} String parseFabricModVersion(String)
+~ {static} String parseForgeModVersion(String)
+~ {static} String parseFabricModName(String)
+~ {static} String parseForgeModName(String)
+~ HashMap<File,String[]> getModInfo(ArrayList<File>)
+}
+
+class com.cold.coldlauncher.infrastructure.Icon {
+- String path
+- boolean isDefault
+- String defaultPath
++ boolean isChanged()
++ String getPath()
++ void setPath(String)
+}
+
+
+class com.cold.coldlauncher.infrastructure.ForgeGame {
+- String forgeVersion
+- ModList mods
++ boolean isModded()
++ HashMap<File,String[]> getModInfo(ArrayList<File>)
++ boolean launch(Player)
+}
+
+
+
+
+javafx.application.Application <|-- com.cold.coldlauncher.ui.MainGUI
+com.cold.coldlauncher.infrastructure.Game <|-- com.cold.coldlauncher.infrastructure.NonModedGame
+com.cold.coldlauncher.infrastructure.ModUtil <|.. com.cold.coldlauncher.infrastructure.FabricGame
+com.cold.coldlauncher.infrastructure.Game <|-- com.cold.coldlauncher.infrastructure.FabricGame
+com.cold.coldlauncher.infrastructure.ModUtil <|.. com.cold.coldlauncher.infrastructure.ForgeGame
+com.cold.coldlauncher.infrastructure.Game <|-- com.cold.coldlauncher.infrastructure.ForgeGame
+@enduml

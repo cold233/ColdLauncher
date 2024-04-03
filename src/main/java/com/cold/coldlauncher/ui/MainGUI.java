@@ -13,11 +13,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.Iterator;
+
 public class MainGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         PlayerList playerList = new PlayerList();
         Player test = new Player();
+        PlayerCheckBoxs playerCheckBoxs=new PlayerCheckBoxs();
+        VBox playerListBox = new VBox(5);
 
         //Main window
         MenuBar bar = new MenuBar();
@@ -54,86 +58,29 @@ public class MainGUI extends Application {
 
         Scene mainScene = new Scene(mainRoot,400,300);
 
-        //Add player window
-        Text addPlayerCaption = new Text();
-        addPlayerCaption.setFill(Color.RED);
-        Text name = new Text("Player Name: ");
-        TextField nameBox = new TextField();
-        HBox playerNameSetting = new HBox(10,name,nameBox);
-        playerNameSetting.setAlignment(Pos.CENTER);
-        Text uuid = new Text("Player UUID: ");
-        TextField uuidBox = new TextField();
-        HBox playerUuidSetting = new HBox(10,uuid,uuidBox);
-        playerUuidSetting.setAlignment(Pos.CENTER);
-        Button savePlayer = new Button("Save");
-        Button cancelPlayer = new Button("Cancel");
-        HBox buttonsPlayer = new HBox(50,savePlayer,cancelPlayer);
+        AddPlayerStage addPlayerStage = new AddPlayerStage(playerList,playerCheckBoxs,playerListBox);
+        ManagePlayerStage managePlayerStage = new ManagePlayerStage(playerList,playerCheckBoxs,playerListBox);
 
-        VBox addPlayerRoot = new VBox(15,addPlayerCaption,playerNameSetting,playerUuidSetting,buttonsPlayer);
-        addPlayerRoot.setBackground(Background.EMPTY);
-
-        Scene addPlayer = new Scene(addPlayerRoot,200,200);
-        Stage addPlayerStage = new Stage();
-        addPlayerStage.setScene(addPlayer);
-        addPlayerStage.initModality(Modality.APPLICATION_MODAL);
-        addPlayerStage.setTitle("Adding Player...");
+        //Add player stage
+        Stage stage1 = new Stage();
 
 
-        //Manage player window
-        Text playerListTitle = new Text("Players:");
-        VBox playerListBox = new VBox(5);
-        for(int i = 0;i<playerList.getPlayerList().size();i++){
-            playerListBox.getChildren().add(new CheckBox(playerList.getPlayerList().get(i).getName()));
-        }
-        ScrollPane playerListPane = new ScrollPane(playerListBox);
-        playerListPane.setHmax(300);
-        playerListPane.setVmax(100);
+        //Manage player stage
+        Stage stage2 = new Stage();
 
-        Button deletePlayer = new Button("Delete");
-        Button editPlayer = new Button("Edit");
-        HBox managerPlayerButtons = new HBox(20,deletePlayer,editPlayer);
-
-        VBox managePlayerRoot = new VBox(10,playerListTitle,playerListPane,managerPlayerButtons);
-        Scene managePlayer = new Scene(managePlayerRoot,250,400);
-        Stage managePlayerStage = new Stage();
-        managePlayerStage.setScene(managePlayer);
-        managePlayerStage.initModality(Modality.APPLICATION_MODAL);
-        managePlayerStage.setTitle("Player Profile Manage");
 
 
         //Actions for main window
-        newPlayerMenu.setOnAction(e ->addPlayerStage.show());
+        newPlayerMenu.setOnAction(e ->addPlayerStage.start(stage1));
         managePlayerMenu.setOnAction(e->{
-            for(int i = 0;i<playerList.getPlayerList().size();i++){
-                playerListBox.getChildren().add(new CheckBox(playerList.getPlayerList().get(i).getName()));
+            try {
+                managePlayerStage.start(stage2);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
-            managePlayerStage.show();
         });
 
-        //Actions for add player
-        savePlayer.setOnAction(e->{
-            if(test.validateName(nameBox.getText())& test.validateUUID(uuidBox.getText())) {
-                playerList.addPlayer(nameBox.getText(),uuidBox.getText());
-                addPlayerStage.close();
-                nameBox.setText("");
-                uuidBox.setText("");
-                addPlayerCaption.setText("");
-            }
-            else if (test.validateName(nameBox.getText())&!test.validateUUID(uuidBox.getText())) addPlayerCaption.setText("Invalid UUID!");
-            else if (test.validateUUID(uuidBox.getText())&!test.validateName(nameBox.getText()))addPlayerCaption.setText("Invalid player name!");
-            else addPlayerCaption.setText("Invalid details! Check your input!");
-                }
-        );
-        cancelPlayer.setOnAction(e->{
-            addPlayerStage.close();
-            nameBox.setText("");
-            uuidBox.setText("");
-            addPlayerCaption.setText("");
-        });
 
-        //Actions for manage player
-        editPlayer.setOnAction(e->{
-        });
 
         stage.setScene(mainScene);
         stage.setTitle("Cold Launcher");
