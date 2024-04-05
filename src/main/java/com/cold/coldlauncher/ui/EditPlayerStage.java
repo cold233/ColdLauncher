@@ -1,7 +1,6 @@
 package com.cold.coldlauncher.ui;
 
 import com.cold.coldlauncher.infrastructure.Player;
-import com.cold.coldlauncher.infrastructure.PlayerList;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,16 +14,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import static com.cold.coldlauncher.ui.MainGUI.playerCheckBoxs;
+import static com.cold.coldlauncher.ui.MainGUI.playerList;
+
 public class EditPlayerStage extends Application {
-    private PlayerList playerList;
-    private PlayerCheckBoxs playerCheckBoxs;
-    private VBox playerListBox;
     private String targetPlayerName;
-    public EditPlayerStage(PlayerList playerListIn,PlayerCheckBoxs playerCheckBoxs,VBox playerListBoxIn,String targetPlayerNameIn){
-        this.playerList=playerListIn;
-        this.playerCheckBoxs=playerCheckBoxs;
-        this.playerListBox=playerListBoxIn;
-        this.targetPlayerName=targetPlayerNameIn;
+    public EditPlayerStage(){
+    }
+
+    public void setTargetPlayerName(String targetPlayerName) {
+        this.targetPlayerName = targetPlayerName;
     }
 
     public String getTargetPlayerName() {
@@ -33,7 +32,6 @@ public class EditPlayerStage extends Application {
 
     @Override
     public void start(Stage stage){
-        Player emptyPlayer = new Player();
         Text editPlayerCaption = new Text();
         editPlayerCaption.setFill(Color.RED);
         Text name = new Text("Player Name: ");
@@ -63,20 +61,18 @@ public class EditPlayerStage extends Application {
         uuidBox.setText(playerList.getPlayerList().get(index).getUuid());
 
         savePlayer.setOnAction(e->{
-                    if(emptyPlayer.validateName(nameBox.getText())& emptyPlayer.validateUUID(uuidBox.getText())) {
-                        if(playerList.searchPlayerByName(nameBox.getText())!=-1) editPlayerCaption.setText("Existing Player name, use another name!");
-                        else {
-                            playerList.getPlayerList().get(index).setName(nameBox.getText());
-                            playerList.getPlayerList().get(index).setUuid(uuidBox.getText());
-                            playerCheckBoxs.getPlayerCheckBoxes().get(index).setText(nameBox.getText());
-                            editPlayerStage.close();
-                            nameBox.setText("");
-                            uuidBox.setText("");
-                            editPlayerCaption.setText("");
-                        }
+                    if(Player.validateName(nameBox.getText())& Player.validateUUID(uuidBox.getText())) {
+
+                    playerList.getPlayerList().get(index).setName(nameBox.getText());
+                    playerList.getPlayerList().get(index).setUuid(uuidBox.getText());
+                    playerCheckBoxs.getPlayerCheckBoxes().get(index).setText(nameBox.getText());
+                    editPlayerStage.close();
+                    nameBox.setText("");
+                    uuidBox.setText("");
+                    editPlayerCaption.setText("");
                     }
-                    else if (emptyPlayer.validateName(nameBox.getText())&!emptyPlayer.validateUUID(uuidBox.getText())) editPlayerCaption.setText("Invalid UUID!");
-                    else if (emptyPlayer.validateUUID(uuidBox.getText())&!emptyPlayer.validateName(nameBox.getText()))editPlayerCaption.setText("Invalid player name!");
+                    else if (Player.validateName(nameBox.getText())&!Player.validateUUID(uuidBox.getText())) editPlayerCaption.setText("Invalid UUID!");
+                    else if (Player.validateUUID(uuidBox.getText())&!Player.validateName(nameBox.getText()))editPlayerCaption.setText("Invalid player name!");
                     else editPlayerCaption.setText("Invalid details! Check your input!");
                 }
         );

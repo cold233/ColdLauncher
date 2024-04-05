@@ -8,21 +8,18 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.Iterator;
 
 public class MainGUI extends Application {
+    public static PlayerList playerList = new PlayerList();
+    public static PlayerCheckBoxs playerCheckBoxs=new PlayerCheckBoxs();
+    public static VBox playerListBox = new VBox(5);
+    public static AddPlayerStage addPlayerStage = new AddPlayerStage();
+    public static ManagePlayerStage managePlayerStage = new ManagePlayerStage();
     @Override
-    public void start(Stage stage) throws Exception {
-        PlayerList playerList = new PlayerList();
-        Player test = new Player();
-        PlayerCheckBoxs playerCheckBoxs=new PlayerCheckBoxs();
-        VBox playerListBox = new VBox(5);
-
+    public void start(Stage stage) {
         //Main window
         MenuBar bar = new MenuBar();
         Menu game = new Menu("Game");
@@ -52,14 +49,13 @@ public class MainGUI extends Application {
 
         Button start = new Button("Start");
 
-        VBox mainRoot = new VBox(30,bar,gameText,playerText,start);
+        VBox mainRoot = new VBox(40,bar,gameText,playerText,start);
         mainRoot.setAlignment(Pos.TOP_LEFT);
         mainRoot.setBackground(Background.EMPTY);
 
-        Scene mainScene = new Scene(mainRoot,400,300);
+        playerListBox.setMinHeight(350);
 
-        AddPlayerStage addPlayerStage = new AddPlayerStage(playerList,playerCheckBoxs,playerListBox);
-        ManagePlayerStage managePlayerStage = new ManagePlayerStage(playerList,playerCheckBoxs,playerListBox);
+        Scene mainScene = new Scene(mainRoot,500,400);
 
         //Add player stage
         Stage stage1 = new Stage();
@@ -73,15 +69,10 @@ public class MainGUI extends Application {
         //Actions for main window
         newPlayerMenu.setOnAction(e ->addPlayerStage.start(stage1));
         managePlayerMenu.setOnAction(e->{
-            try {
-                managePlayerStage.start(stage2);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+            //managePlayerStage.setSelectedPlayerName(playerCheckBoxs.getSelected());
+            managePlayerStage.start(stage2);
+
         });
-
-
-
         stage.setScene(mainScene);
         stage.setTitle("Cold Launcher");
         stage.show();

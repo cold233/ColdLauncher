@@ -37,7 +37,7 @@ public class Player {
         }
         else return false;
     }
-    public String removeChar(String str,char c){
+    public static String removeChar(String str,char c){
         if(!str.contains(Character.toString(c))) return str;
         else {
             String[] tmp = str.split(Character.toString(c));
@@ -48,7 +48,7 @@ public class Player {
             return ret.toString();
         }
     }
-    public boolean validateName(String name){
+    public static boolean validateName(String name){
         char[] nameCharArray = name.toCharArray();
         int l = name.length();
         if(l<3|l>16) return false;
@@ -65,8 +65,8 @@ public class Player {
             return true;
         }
     }
-    public boolean validateUUID(String uuid){
-        uuid=this.removeChar(uuid,'-');
+    public static boolean validateUUID(String uuid){
+        uuid=Player.removeChar(uuid,'-');
         char[] id = uuid.toCharArray();
         int l = uuid.length();
         if(l<1|l>32) return false;

@@ -9,8 +9,15 @@ import java.util.Iterator;
 public class PlayerCheckBoxs {
     private ArrayList<CheckBox> playerCheckBoxes;
 
+
     public PlayerCheckBoxs(){
         this.playerCheckBoxes=new ArrayList<>();
+    }
+    public String getSelected(){
+        for (int i=0;i<this.getPlayerCheckBoxes().size();i++){
+            if(this.getPlayerCheckBoxes().get(i).isSelected()) return this.getPlayerCheckBoxes().get(i).getText();
+        }
+        return "No player selected!";
     }
     public int searchBox(String name){
         for (int i=0;i< getPlayerCheckBoxes().size();i++){
@@ -27,6 +34,11 @@ public class PlayerCheckBoxs {
             return true;
         }
         else return false;
+    }
+    public void removeAllBox(){
+        for(int i=0;i<this.getPlayerCheckBoxes().size();i++){
+            this.getPlayerCheckBoxes().remove(i);
+        }
     }
 
     public static void main(String[] args) {
